@@ -1,0 +1,25 @@
+services:
+  web:
+    image: denisemelyanov/catalogue:latest
+    container_name: catalogue
+    command: gunicorn Catalgue.wsgi:application -w 3 --bind 0.0.0.0:8000
+    volumes:
+      - static_volume:/app/static
+      - ./db.sqlite3:/app/db.sqlite3
+      - ./media/:/app/main/media
+    expose:
+      - 8000
+
+  nginx:
+    container_name: nginx
+    restart: unless-stopped
+    build: ./nginx
+    volumes:
+      - static_volume:/app/static
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+
+volumes:
+  static_volume:
