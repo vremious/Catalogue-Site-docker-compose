@@ -1,6 +1,6 @@
 services:
   web:
-    image: denisemelyanov/catalogue:latest
+    image: denisemelyanov/catalogue:1.1
     container_name: catalogue
     command: gunicorn Catalgue.wsgi:application -w 3 --bind 0.0.0.0:8000
     volumes:
